@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
 
 melbourne_file_path = 'melb_data.csv'
 
@@ -86,3 +87,9 @@ for max_leaf_nodes in [5, 50, 500, 5000]:
         opt_mln = max_leaf_nodes
 
 print("Min MAE: %d, \t Optimal MLN: %d" % (min_mae, opt_mln))
+
+# Build a random forest model
+forest_model = RandomForestRegressor(random_state=1)
+forest_model.fit(train_X, train_y)
+melb_preds = forest_model.predict(val_X)
+print(mean_absolute_error(val_y, melb_preds))
